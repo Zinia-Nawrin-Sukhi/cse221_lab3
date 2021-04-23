@@ -1,0 +1,84 @@
+
+
+
+import java.io.*;
+import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
+//import java.util.Scanner;
+
+
+public class DFs
+{
+    
+    static Queue<Integer> q = new LinkedList<Integer>();  
+    static  int parents[];
+    static String color[];
+    static int discoveryTime[];
+    static int finishedTime[];
+    static int time=0;
+    static int v;
+    public static void main(String[] args)
+    {
+        BufferedReader obj= null;
+        try {
+            String str;
+            FileReader fr = new FileReader("E:\\cse221\\Lab01\\input1.txt");
+            obj = new BufferedReader(fr);
+            str = obj.readLine();
+            v = Integer.parseInt(str);
+            System.out.print(v);
+            int graph[][]= new int[v][v];
+            while ((str = obj.readLine()) != null) {
+                StringTokenizer st = new StringTokenizer(str," ");
+                int token1 = Integer.parseInt(st.nextToken());
+                int token2 = Integer.parseInt(st.nextToken());
+                graph[token1][token2]=1;
+            }
+                  parents= new int[v];
+        color= new String[v];
+        discoveryTime= new int[v];
+        finishedTime=new int[v];
+        for(int u=0;u<v;u++){
+            parents[u]= 0;
+            color[u]="white";
+            discoveryTime[u]=0;
+            finishedTime[u]=0; 
+        }
+        for(int u=0;u<v;u++){
+            if(color[u]=="white"){
+                DfsVisit(graph,u);
+            }
+        }
+    }
+        //        System.out.println();  
+            
+            
+         catch (IOException e) {
+            
+            e.printStackTrace();
+        }
+}
+        
+  
+    
+    public static void DfsVisit(int[][] graph,int u){
+        for(int v=0;v<=u; v++){
+            if(color[v]=="white"){
+                parents[v]= u;
+            }
+            color[u]="gray";
+            time=time+1;
+            discoveryTime[u]=time;
+            System.out.print("discoveryTime:"+time);
+             System.out.println();
+            DfsVisit(graph,v);
+            color[u]="black";
+            time=time +1;
+            finishedTime[u]=time;
+            System.out.print(" finishedTime:"+time);
+             System.out.println();
+        }
+        
+    }
+}
